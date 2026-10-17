@@ -1,10 +1,10 @@
-# Prompt: site de lanchonete
+# Prompt: site mostruário para lanchonetes
 
-Prompts para criar o site de uma lanchonete com o [Vibe Coding Toolkit](https://github.com/soumatheusgomes/vibe-coding-toolkit). Segue o mesmo caminho do prompt das plaquinhas NFC: base primeiro, MVP depois.
+Prompts para criar, com o [Vibe Coding Toolkit](https://github.com/soumatheusgomes/vibe-coding-toolkit), um site de demonstração de lanchonete. Ele serve de mostruário para vender sites a donos de lanchonete: o cliente vê como o site dele ficaria e, depois de fechar negócio, você troca nome, cores, cardápio e contatos para entregar a versão real.
 
-Antes de começar: crie um repositório vazio (por exemplo, `site-lanchonete`), clone e abra o agente (Claude Code ou Codex) dentro dessa pasta.
+Mesmo caminho dos outros prompts: base primeiro, MVP depois.
 
-Troque os campos entre colchetes antes de colar. Se ainda não tiver alguma informação, deixe o colchete: o agente vai marcar como pendente.
+Antes de começar: crie um repositório vazio (por exemplo, `demo-lanchonete`), clone e abra o agente (Claude Code ou Codex) dentro dessa pasta. Troque `[SEU WHATSAPP]` pelo seu número (55 + DDD + número, só dígitos).
 
 ---
 
@@ -13,57 +13,66 @@ Troque os campos entre colchetes antes de colar. Se ainda não tiver alguma info
 ```text
 Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/11-next-project-bootstrap.md e execute o setup neste diretório.
 
-Projeto: site da lanchonete "[NOME DA LANCHONETE]", em [BAIRRO, CIDADE].
+Projeto: "Demo Lanchonete", site de demonstração de uma lanchonete fictícia, usado como mostruário de vendas.
 
-Sobre a casa: [ex.: lanchonete de bairro aberta desde 2015, famosa pelo X-tudo e pelo pastel de feira, ambiente simples e atendimento de família]. O site precisa transmitir essa personalidade real, não a de uma rede genérica.
+Objetivo: eu vendo sites para lanchonetes. Este site mostra ao dono da lanchonete, no celular dele e durante a conversa de venda, como o site dele ficaria: cardápio com preços, pedido pelo WhatsApp, horário, localização e botão de avaliação no Google. Depois de fechar a venda, eu copio o projeto e troco os dados para o cliente real. O site precisa impressionar pela cara de lanchonete de verdade, não de modelo genérico.
 
-Problema: hoje o cliente só encontra a lanchonete pelo Instagram ou pelo boca a boca. Não existe um lugar com o cardápio atualizado, preços, horário e endereço, e a maioria dos pedidos chega no WhatsApp com perguntas repetidas ("tem o quê hoje?", "até que horas abre?", "entrega aqui?"). Poucos clientes satisfeitos deixam avaliação no Google.
+Público:
+- Quem decide: donos de lanchonetes, hamburguerias e pastelarias de bairro no Brasil, pouco técnicos, que vão ver a demo no celular, muitas vezes ao meu lado ou por um link que eu mando no WhatsApp.
+- Quem usaria a versão real: clientes da lanchonete, no celular, com pressa e internet fraca.
+Interface 100% em português do Brasil, mobile-first.
 
-Público: moradores e trabalhadores da região, que acessam pelo celular, muitas vezes com pressa e internet fraca. Interface 100% em português do Brasil, mobile-first.
+Lanchonete fictícia: criar uma marca inventada e crível, com nome, bairro e cidade fictícios, história curta e cardápio realista com preços de mercado brasileiro (lanches, porções, pastéis, bebidas, sobremesas). Não usar nome, logo ou dados de nenhum estabelecimento real. Telefone, endereço e links da lanchonete são fictícios.
 
 Fluxos principais do MVP:
-1. Abertura: nome, uma frase curta com a cara da casa, foto real de um lanche ou da fachada, indicação clara de "aberto agora" ou "fechado, abre às X" calculada pelo horário de funcionamento (fuso America/Sao_Paulo), e botões para "Ver cardápio" e "Pedir no WhatsApp".
-2. Cardápio: categorias (ex.: lanches, porções, pastéis, bebidas, sobremesas), cada item com nome, descrição curta, preço e foto opcional. Navegação rápida entre categorias, busca simples por nome e marcação de itens esgotados ou "mais pedido".
-3. Montar pedido: o cliente adiciona itens com quantidade e observação (ex.: "sem cebola"), vê o subtotal, escolhe retirada ou entrega, informa nome, endereço quando for entrega, forma de pagamento (Pix, dinheiro com troco para quanto, cartão na entrega/retirada). Validação com Zod.
-4. Envio pelo WhatsApp: mostrar um resumo do pedido e, ao confirmar, abrir https://wa.me/[55DDDNUMERO]?text=<mensagem codificada> com a mensagem organizada (itens, observações, total, retirada/entrega, endereço, pagamento). A taxa de entrega é informada pela lanchonete na conversa, e o site deixa isso claro.
-5. Informações da casa: horário de funcionamento por dia da semana, endereço com link para abrir no Google Maps, área de entrega aproximada, telefone, Instagram e formas de pagamento aceitas.
-6. Avaliação no Google: no final da página, um bloco de agradecimento com chamada direta ("Comeu bem? Conta pra gente no Google") e botão que abre o link de avaliação da lanchonete. O link fica em variável de ambiente pública (NEXT_PUBLIC_GOOGLE_REVIEW_URL). O mesmo botão aparece na tela de confirmação depois que o pedido é enviado para o WhatsApp.
+1. Abertura: nome da lanchonete, frase curta com a cara da casa, foto de destaque, status "aberto agora" ou "fechado, abre às X" calculado pelo horário de funcionamento (fuso America/Sao_Paulo) e botões "Ver cardápio" e "Fazer pedido".
+2. Cardápio: categorias com navegação rápida, busca por nome, itens com nome, descrição, preço e foto, marcação de "mais pedido" e "esgotado".
+3. Montar pedido: adicionar itens com quantidade e observação ("sem cebola"), subtotal, retirada ou entrega, nome, endereço na entrega e forma de pagamento (Pix, dinheiro com troco, cartão na entrega/retirada). Validação com Zod.
+4. Pedido pelo WhatsApp em modo demonstração: mostrar o resumo e a mensagem exatamente como chegaria no WhatsApp da lanchonete. Como a lanchonete é fictícia, o botão final abre https://wa.me/[SEU WHATSAPP] com a mensagem do pedido precedida de uma linha "Pedido de teste feito no site de demonstração", para que o dono veja na prática a mensagem chegando.
+5. Informações da casa: horário por dia da semana, endereço com mapa ou link para o Google Maps, área de entrega, telefone, Instagram e formas de pagamento.
+6. Avaliação no Google: no final da página e na confirmação do pedido, um bloco com chamada direta ("Comeu bem? Conta pra gente no Google") e botão de avaliação. Na demo, o botão abre um aviso curto explicando que na versão real ele leva direto para a página de avaliação da lanchonete no Google.
+7. Chamada de venda discreta: uma faixa pequena no topo ou no rodapé, que não atrapalhe a demonstração, com algo como "Site de demonstração. Quer um assim para a sua lanchonete?" e botão para falar comigo no WhatsApp (https://wa.me/[SEU WHATSAPP] com mensagem pronta de interesse).
+8. Troca de estilo para a demonstração: dois ou três estilos visuais prontos (ex.: lanchonete tradicional de bairro, hamburgueria artesanal, pastelaria/lanche rápido) que eu possa alternar na hora da conversa por um seletor discreto ou por parâmetro na URL (?estilo=...), mudando cores, tipografia e foto de destaque sem mudar o conteúdo. Registrar no PRODUCT.md se isso ficar para depois do MVP.
 
-Direção visual (importante: o site não pode ter cara de gerado por IA):
-- Partir da identidade real da lanchonete: [CORES DA MARCA / LOGO / ESTILO, ex.: vermelho e amarelo, letreiro pintado à mão]. Se não houver, propor uma direção própria em docs/design.md inspirada em lanchonete brasileira de bairro (placa de cardápio, quadro de giz, toalha xadrez, letreiro), e não em startup de tecnologia.
+Personalização para clientes reais (requisito central):
+- Todos os dados da lanchonete (nome, frase, história, cores, logo, fotos, cardápio, preços, horários, endereço, telefone, WhatsApp, Instagram, link de avaliação do Google) ficam em um único arquivo de configuração tipado e validado com Zod, mais a pasta de imagens.
+- Uma variável de ambiente (ex.: NEXT_PUBLIC_DEMO_MODE) liga e desliga o modo demonstração: com ela desligada, somem a faixa de venda, o seletor de estilo e o aviso do Google, o pedido vai para o WhatsApp da lanchonete e o botão de avaliação abre o link real.
+- Documentar em docs/onboarding.md o passo a passo para transformar a demo no site de um cliente: copiar o projeto, trocar o arquivo de configuração, trocar as imagens, desligar o modo demonstração, conferir e publicar.
+
+Direção visual (o site não pode ter cara de gerado por IA):
+- Cada estilo deve parecer uma lanchonete brasileira de verdade (cardápio de parede, quadro de giz, letreiro, embalagem de papel), e não startup de tecnologia. Registrar a direção de cada estilo em docs/design.md.
 - Evitar os padrões típicos de site gerado por IA: gradiente roxo/azul, fundo escuro com brilhos, cards todos iguais com sombra e borda arredondada, ícones genéricos em cada seção, emojis decorativos, títulos como "Bem-vindo ao nosso mundo de sabores" ou "Experiência gastronômica única", seções de "Nossos valores" e depoimentos inventados.
-- Textos curtos, diretos e no jeito de falar da casa, como o dono escreveria num cartaz. Nada de frases de marketing vazias. Preços sempre visíveis.
-- Tipografia com personalidade (uma fonte de título marcante e uma fonte de texto bem legível, via next/font), hierarquia forte e layout que lembre um cardápio de verdade, com o cardápio como protagonista.
-- Fotos reais da lanchonete em public/ quando eu fornecer. Enquanto não houver, usar espaços reservados neutros e marcados como pendentes, sem fotos de banco de imagem genéricas nem imagens geradas por IA.
+- Textos curtos, diretos e no jeito de falar de dono de lanchonete, como num cartaz. Preços sempre visíveis.
+- Tipografia com personalidade (fonte de título marcante e fonte de texto legível, via next/font) e o cardápio como protagonista.
+- Fotos: usar fotos de comida com licença gratuita para uso comercial (ex.: Unsplash ou Pexels), escolhidas para parecerem de lanchonete brasileira real, salvas localmente em public/ e otimizadas com next/image, com fonte e licença registradas em docs/setup.md. Não usar imagens geradas por IA nem fotos com marcas visíveis.
 - Pouca animação: só transições discretas que ajudam a navegar.
 
 Restrições e decisões:
-- MVP sem pagamento online, sem login, sem painel administrativo e sem integração com iFood. O pedido é fechado pelo WhatsApp.
-- MVP sem banco de dados: cardápio, preços e horários ficam em um arquivo de dados tipado no código, fácil de editar por quem não programa (documentar em docs/onboarding.md como trocar preço, marcar item esgotado e mudar horário). Registrar a decisão e a justificativa no PRODUCT.md e em docs/architecture.md; um painel para editar o cardápio entra como evolução futura.
-- Número do WhatsApp e link de avaliação em variáveis de ambiente públicas documentadas no .env.example, sem dados reais versionados.
-- O carrinho pode ficar salvo no navegador (localStorage) para o cliente não perder o pedido se fechar a página; nenhum dado do cliente é enviado para servidor.
-- SEO local básico: título e descrição com nome, bairro e cidade, dados estruturados schema.org do tipo Restaurant (endereço, horário, telefone, faixa de preço) e imagem de compartilhamento para WhatsApp/Instagram.
-- Acessível (contraste, teclado, rótulos, tamanho de toque confortável) e leve em celular com internet fraca.
-- Cardápio e preços podem começar com exemplos reversíveis marcados como "a definir" no PRODUCT.md, até eu enviar os reais.
+- Sem pagamento online, login, painel administrativo ou integração com iFood.
+- Sem banco de dados: todo o conteúdo vem do arquivo de configuração. Registrar a decisão e a justificativa no PRODUCT.md e em docs/architecture.md.
+- Meu WhatsApp e o modo demonstração em variáveis de ambiente documentadas no .env.example, sem número real versionado.
+- O carrinho pode ficar no localStorage; nenhum dado de quem testar a demo é enviado para servidor.
+- SEO: na demo, marcar a página como noindex para não aparecer no Google como se fosse uma lanchonete real. Deixar preparado (e ligado quando o modo demonstração estiver desligado) título e descrição com nome, bairro e cidade, dados estruturados schema.org do tipo Restaurant e imagem de compartilhamento para WhatsApp.
+- Acessível (contraste, teclado, rótulos, toque confortável) e leve em celular com internet fraca.
 
-Critérios de aceitação do MVP: pelo celular, o cliente vê se a lanchonete está aberta, navega pelo cardápio com preços, monta um pedido com observações, escolhe retirada ou entrega e pagamento, abre o WhatsApp com a mensagem completa e correta e, no fim da página e após o pedido, encontra o botão que abre a avaliação no Google. Sem erros no console, com lint, typecheck, testes e build passando.
+Critérios de aceitação do MVP: no celular, um dono de lanchonete consegue ver o status de aberto/fechado, navegar pelo cardápio, montar um pedido, ver a mensagem formatada e recebê-la no WhatsApp de demonstração, encontrar o botão de avaliação no Google com a explicação, e falar comigo pela faixa de venda. Trocar o arquivo de configuração e desligar o modo demonstração gera um site de cliente sem nenhum vestígio da demo. Sem erros no console, com lint, typecheck, testes e build passando.
 ```
 
-Ao final o agente entrega a base configurada e indica a próxima tarefa do MVP. Assim como no outro prompt, ele **não** implementa o site inteiro nesse passo.
+Ao final o agente entrega a base configurada e indica a próxima tarefa do MVP. Ele **não** implementa o site inteiro nesse passo.
 
 ---
 
 ## Passo 2: implementar o MVP
 
 ```text
-Leia PRODUCT.md, AGENTS.md e docs/ (principalmente docs/design.md) e implemente o MVP descrito, nesta ordem: dados do cardápio e horários, abertura com status "aberto agora", cardápio com categorias e busca, carrinho com observações, formulário de pedido com Zod, envio pelo WhatsApp com resumo, informações da casa e bloco de avaliação no Google no final da página e na confirmação do pedido. Siga a direção visual do docs/design.md e revise cada tela contra a lista do que evitar para não parecer site gerado por IA. Respeite os padrões do projeto (350 linhas por arquivo, componentes pequenos). Crie testes para o cálculo de aberto/fechado (incluindo virada de dia e dia fechado), para o subtotal do carrinho e para a montagem da mensagem do WhatsApp (acentos, quebras de linha e caracteres especiais). Ao final rode lint, typecheck, testes e build, abra o site em uma porta livre, percorra o fluxo completo em tamanho de celular, confira o console e atualize a documentação responsável. Depois faça de 3 a 5 ciclos de code review focados em comportamento, acessibilidade, validação de entradas e fidelidade à direção visual.
+Leia PRODUCT.md, AGENTS.md e docs/ (principalmente docs/design.md) e implemente o MVP descrito, nesta ordem: arquivo de configuração da lanchonete fictícia com schema Zod, abertura com status "aberto agora", cardápio com categorias e busca, carrinho com observações, formulário de pedido com Zod, envio pelo WhatsApp em modo demonstração, informações da casa, bloco de avaliação no Google, faixa de venda e troca de estilos. Garanta que desligar NEXT_PUBLIC_DEMO_MODE remova tudo que é da demo. Siga a direção visual do docs/design.md e revise cada tela contra a lista do que evitar para não parecer site gerado por IA. Respeite os padrões do projeto (350 linhas por arquivo, componentes pequenos). Crie testes para o cálculo de aberto/fechado (virada de dia e dia fechado), para o subtotal do carrinho, para a montagem da mensagem do WhatsApp (acentos, quebras de linha, caracteres especiais e a linha de pedido de teste) e para a validação do arquivo de configuração. Ao final rode lint, typecheck, testes e build, abra o site em uma porta livre, percorra o fluxo completo em tamanho de celular com o modo demonstração ligado e desligado, confira o console e atualize a documentação responsável. Depois faça de 3 a 5 ciclos de code review focados em comportamento, acessibilidade, validação de entradas e fidelidade à direção visual.
 ```
 
 ---
 
-## O que separar antes de rodar
+## Para a hora da venda
 
-- Nome, endereço, telefone/WhatsApp e horários da lanchonete.
-- Cardápio com preços (pode ser foto do cardápio impresso; peça ao agente para transcrever).
-- Fotos reais dos lanches e da fachada. É o que mais ajuda o site a não parecer genérico.
-- Link de avaliação do Google: no Perfil da Empresa no Google, procure "Pedir avaliações" e copie o link.
+- Publique a demo na Vercel (plano gratuito) e mande o link no WhatsApp do cliente.
+- Na conversa, troque os estilos com `?estilo=...` para mostrar que o site se adapta à cara da lanchonete dele.
+- Peça para o dono fazer um pedido de teste: a mensagem chegando no seu WhatsApp convence mais que qualquer explicação.
+- Fechou? Siga o passo a passo do `docs/onboarding.md` gerado pelo agente: copie o projeto, troque a configuração e as fotos, desligue o modo demonstração e publique.
