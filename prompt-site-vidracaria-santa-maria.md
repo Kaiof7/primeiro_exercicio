@@ -4,7 +4,7 @@ Prompts para criar o site com o [Vibe Coding Toolkit](https://github.com/soumath
 
 Antes de começar: crie um repositório vazio (por exemplo, `santa-maria-orcamento`), clone e abra o agente (Claude Code ou Codex) dentro dessa pasta.
 
-Troque os campos entre colchetes antes de colar. O que você ainda não tiver pode ficar entre colchetes: o agente marca como pendente e usa um valor de exemplo.
+Os dados da empresa já estão preenchidos. Pendentes: link da pasta do Google Drive e logo. Quando tiver, é só colocar no `empresa.json` do projeto, sem mexer no código.
 
 ---
 
@@ -13,18 +13,33 @@ Troque os campos entre colchetes antes de colar. O que você ainda não tiver po
 ```text
 Leia https://raw.githubusercontent.com/soumatheusgomes/vibe-coding-toolkit/main/docs/prompts/11-next-project-bootstrap.md e execute o setup neste diretório.
 
-Projeto: site de orçamento online da VIDRAÇARIA E SERRALHARIA SANTA MARIA, em [CIDADE/UF].
+Projeto: site de orçamento online da VIDRAÇARIA E SERRALHARIA SANTA MARIA, em Boqueirão/PB.
 
 Problema: hoje os clientes pedem orçamento pelo WhatsApp e mandam as informações aos poucos (nome, endereço, medidas, produto). Isso gasta muito tempo e deixa as conversas bagunçadas. O site precisa juntar tudo num formulário só, mostrar ao cliente uma faixa de preço estimada e mandar para o WhatsApp da empresa UMA mensagem já organizada.
 
-Público: moradores de [CIDADE/UF] e região que chegam quase sempre pelo link do WhatsApp ou do Instagram, no celular, muitas vezes com internet fraca e pouca familiaridade com sites. Interface 100% em português do Brasil, mobile-first.
+Público: moradores de Boqueirão/PB e região que chegam quase sempre pelo link do WhatsApp ou do Instagram, no celular, muitas vezes com internet fraca e pouca familiaridade com sites. Interface 100% em português do Brasil, mobile-first.
 
 ## 1. Catálogo de produtos
 - Cards com foto, nome e "a partir de R$ X/m²". X é o preço mínimo do m² na opção mais barata do produto: preço base "só o material" + acrescimo_min (ex.: Espelho → a partir de R$ 250,00/m²).
 - Duas categorias: "Vidros e Espelhos" e "Serralheria e Esquadrias".
 - Clicar em um produto leva ao formulário com categoria e produto já selecionados e rola até ele.
 - Todos os produtos, preços, fotos e acréscimos ficam em UM arquivo de configuração (produtos.json), para trocar preço ou foto sem mexer no código. Validar o arquivo com um schema Zod nos testes e no build: preço ausente, negativo ou produto duplicado deve falhar com mensagem clara, em vez de quebrar o site em produção.
-- Dados da empresa (nome, WhatsApp, telefone, e-mail, Instagram, endereço, horário, link do Google Drive, link de avaliação, link do mapa) ficam em um segundo arquivo de configuração (empresa.json), também validado, para que nada disso fique espalhado pelo código.
+- Dados da empresa ficam em um segundo arquivo de configuração (empresa.json), também validado, para que nada disso fique espalhado pelo código. Campos opcionais vazios (e-mail, link do Drive, logo) escondem o elemento correspondente no site, sem link quebrado.
+
+Dados da empresa para o empresa.json:
+- Nome: Vidraçaria e Serralharia Santa Maria
+- Cidade: Boqueirão/PB
+- WhatsApp principal (recebe os orçamentos e é o telefone de ligação): 5583991058693, exibido como (83) 99105-8693
+- Segundo número (só na seção Fale Conosco, com link de ligação e de WhatsApp): 5583991153515, exibido como (83) 99115-3515
+- E-mail: não tem (deixar vazio e não exibir)
+- Instagram: @vidracaria_e_serralharia → https://www.instagram.com/vidracaria_e_serralharia/
+- Endereço: Rua Presidente Epitácio Pessoa, 374, Boqueirão/PB. Coordenadas: -7.481445, -36.131624. Bairro e CEP pendentes (marcar no PRODUCT.md).
+- Mapa incorporado: https://www.google.com/maps?q=-7.481445,-36.131624&output=embed
+- Link "Abrir no Google Maps": https://www.google.com/maps/search/?api=1&query=-7.481445,-36.131624
+- Horário: segunda a sexta, 7h20 às 11h20 e 13h20 às 17h20; sábado, 7h às 12h; domingo fechado.
+- Avaliação no Google: https://g.page/r/CdCRQq5xqRYFEBM/review
+- Pasta do Google Drive: pendente (deixar vazio por enquanto)
+- Logo: pendente. Até chegar, usar o nome da empresa escrito na fonte serifada dos títulos como marca, com o mesmo espaço reservado para trocar pelo logo depois.
 
 ## 2. Tabela de preços (preço base por m²)
 O preço base fica no produtos.json e NÃO aparece para o cliente. Ele vê só a faixa estimada e o "a partir de".
@@ -71,7 +86,7 @@ Serralheria e Esquadrias:
   - Estimativa total: R$ 250,00 a R$ 280,00
 - Formato brasileiro com Intl.NumberFormat pt-BR (R$ 1.234,56), área com 2 casas decimais e vírgula.
 - Aviso fixo junto da estimativa: "Valor estimado. O preço final é confirmado depois da medição no local."
-- Limites: largura ou altura vazia, zero, negativa ou não numérica → não calcula e mostra "Informe largura e altura". Medida acima de [1000] cm ou quantidade acima de [50] → não calcula e mostra "Para medidas ou quantidades maiores, fale com a gente pelo WhatsApp". Quantidade mínima 1, só números inteiros.
+- Limites: largura ou altura vazia, zero, negativa ou não numérica → não calcula e mostra "Informe largura e altura". Medida acima de 1000 cm ou quantidade acima de 50 → não calcula e mostra "Para medidas ou quantidades maiores, fale com a gente pelo WhatsApp". Quantidade mínima 1, só números inteiros.
 
 Exemplos que precisam bater (viram testes automatizados):
 - Espelho, 100×100 cm, 1 unidade → 1,00 m² → R$ 250,00 a R$ 280,00
@@ -91,12 +106,12 @@ Exemplos que precisam bater (viram testes automatizados):
 - "Com instalação" (caixa de marcar, só para vidros e espelhos que têm esse preço)
 - Largura e altura em cm (obrigatórias), quantidade (padrão 1)
 - Observações (campo livre, com limite de tamanho razoável)
-- Link de destaque "📷 Ver fotos de referência dos nossos trabalhos", que abre a pasta do Google Drive em nova aba (rel="noopener"): [LINK DA PASTA DO DRIVE]. Logo abaixo: "Gostou de algum modelo? Tire um print e mande na conversa do WhatsApp junto com o orçamento."
+- Link de destaque "📷 Ver fotos de referência dos nossos trabalhos", que abre a pasta do Google Drive em nova aba (rel="noopener"), usando o link do Drive do empresa.json. Enquanto o link estiver vazio, esconder este bloco. Logo abaixo: "Gostou de algum modelo? Tire um print e mande na conversa do WhatsApp junto com o orçamento."
 - Validação com Zod, mensagens de erro em português ao lado de cada campo, foco no primeiro campo com erro ao tentar enviar. Teclado numérico no celular para CEP, WhatsApp e medidas (inputmode).
 - Guardar o rascunho do formulário no navegador (localStorage) para o cliente não perder o que digitou se sair para o Drive ou para o WhatsApp e voltar. Nada é enviado para servidor.
 
 ## 5. Envio pelo WhatsApp
-Botão "Enviar orçamento pelo WhatsApp", que abre https://wa.me/[55DDDNUMERO]?text=<mensagem codificada com encodeURIComponent> com esta mensagem:
+Botão "Enviar orçamento pelo WhatsApp", que abre https://wa.me/5583991058693?text=<mensagem codificada com encodeURIComponent> com esta mensagem:
 
 *Novo pedido de orçamento — Santa Maria*
 Nome: …
@@ -112,19 +127,22 @@ Obs: …
 - Depois do envio, mostrar o lembrete: "Se tiver print de um modelo ou foto do local, mande na conversa que abriu."
 
 ## 6. Fale Conosco
-- Botão do WhatsApp, telefone clicável (tel:), e-mail [E-MAIL] (mailto:) e Instagram [@…]
-- Endereço da oficina: [ENDEREÇO], com mapa do Google Maps incorporado por iframe de incorporação (sem chave de API), carregado sob demanda e com link "Abrir no Google Maps" como alternativa.
-- Horário de atendimento: [SEG–SEX 8h–18h, SÁB 8h–12h]
+- WhatsApp principal (83) 99105-8693, com botão do WhatsApp e telefone clicável (tel:+5583991058693)
+- Segundo número (83) 99115-3515, com telefone clicável (tel:+5583991153515) e link de WhatsApp
+- Instagram @vidracaria_e_serralharia
+- Sem e-mail
+- Endereço da oficina: Rua Presidente Epitácio Pessoa, 374, Boqueirão/PB, com mapa do Google Maps incorporado por iframe de incorporação (sem chave de API), carregado sob demanda e com link "Abrir no Google Maps" como alternativa.
+- Horário de atendimento: seg. a sex. 7h20–11h20 e 13h20–17h20; sáb. 7h–12h; domingo fechado. Mostrar "Aberto agora" ou "Fechado" com base nesse horário (fuso America/Fortaleza, que é o horário de Boqueirão/PB).
 - Botão flutuante do WhatsApp visível em todas as páginas, sem cobrir botões do formulário nem o botão de envio no celular.
 
 ## 7. Avaliação no Google
-- Seção com o título "Gostou do nosso serviço? Avalie a gente no Google ⭐" e botão que abre em nova aba: [LINK DE AVALIAÇÃO DO PERFIL DA EMPRESA NO GOOGLE]
+- Seção com o título "Gostou do nosso serviço? Avalie a gente no Google ⭐" e botão que abre em nova aba: https://g.page/r/CdCRQq5xqRYFEBM/review
 - O mesmo link também fica no rodapé.
 
 ## Restrições e decisões
 - Site 100% estático, sem backend e sem banco de dados. Usar a base Next.js do toolkit com exportação estática (output: "export"), para publicar de graça em Vercel, Netlify ou GitHub Pages. Não instalar Drizzle, PostgreSQL, Pino nem pacotes de servidor que o site não usa; aplicar o perfil leve de lint sem persistência. Registrar essa decisão e a justificativa no PRODUCT.md e em docs/architecture.md.
 - A função de cálculo e a montagem da mensagem do WhatsApp ficam em módulos separados, puros e sem dependência de React (ex.: src/lib/estimativa.ts e src/lib/mensagem-whatsapp.ts), cobertos por testes Vitest com todos os exemplos da seção 3.
-- Visual: verde-escuro (#1F4A3D) e bege-claro (#F3EEE6), tipografia serifada nos títulos e sem serifa legível no texto (via next/font), combinando com a tabela de preços impressa da empresa. Logo: [ARQUIVO]. Conferir contraste mínimo WCAG AA dessas cores em textos e botões. Registrar a direção visual em docs/design.md.
+- Visual: verde-escuro (#1F4A3D) e bege-claro (#F3EEE6), tipografia serifada nos títulos e sem serifa legível no texto (via next/font), combinando com a tabela de preços impressa da empresa. Logo: ainda não existe; usar o nome em fonte serifada até ele chegar. Conferir contraste mínimo WCAG AA dessas cores em textos e botões. Registrar a direção visual em docs/design.md.
 - O site deve parecer de uma vidraçaria de verdade, não de modelo genérico: fotos reais dos trabalhos, textos curtos e diretos, sem gradientes chamativos, sem cards todos iguais cheios de ícones genéricos, sem frases de marketing vazias e sem depoimentos inventados.
 - Imagens em WebP, com tamanho adequado ao celular e carregamento sob demanda (lazy loading); como a exportação estática não otimiza imagens no servidor, gerar as versões WebP antes e documentar como converter fotos novas. Enquanto não houver fotos reais, usar espaços reservados neutros marcados como pendentes, sem imagens geradas por IA.
 - Contatos, links e número do WhatsApp vêm do empresa.json. Não versionar dados pessoais de clientes.
@@ -150,8 +168,7 @@ Leia PRODUCT.md, AGENTS.md e docs/ e implemente o MVP descrito, nesta ordem: pro
 
 ## O que separar antes de rodar
 
-- Número do WhatsApp, telefone, e-mail, Instagram, endereço e horário da oficina.
+- Bairro e CEP da oficina.
 - Logo em boa resolução (de preferência SVG ou PNG com fundo transparente).
 - Fotos reais dos trabalhos para os cards do catálogo.
 - Link da pasta do Google Drive com as fotos de referência (compartilhada como "qualquer pessoa com o link pode ver").
-- Link de avaliação do Google: no Perfil da Empresa no Google, procure "Pedir avaliações" e copie o link.
