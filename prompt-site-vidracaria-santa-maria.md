@@ -33,7 +33,7 @@ Dados da empresa para o empresa.json:
 - Segundo número (só na seção Fale Conosco, com link de ligação e de WhatsApp): 5583991153515, exibido como (83) 99115-3515
 - E-mail: não tem (deixar vazio e não exibir)
 - Instagram: @vidracaria_e_serralharia → https://www.instagram.com/vidracaria_e_serralharia/
-- Endereço: Rua Presidente Epitácio Pessoa, 374, Boqueirão/PB. Coordenadas: -7.481445, -36.131624. Bairro e CEP pendentes (marcar no PRODUCT.md).
+- Endereço: Rua Presidente Epitácio Pessoa, 374, Centro, Boqueirão/PB, CEP 58450-000. Coordenadas: -7.481445, -36.131624.
 - Mapa incorporado: https://www.google.com/maps?q=-7.481445,-36.131624&output=embed
 - Link "Abrir no Google Maps": https://www.google.com/maps/search/?api=1&query=-7.481445,-36.131624
 - Horário: segunda a sexta, 7h20 às 11h20 e 13h20 às 17h20; sábado, 7h às 12h; domingo fechado.
@@ -131,7 +131,7 @@ Obs: …
 - Segundo número (83) 99115-3515, com telefone clicável (tel:+5583991153515) e link de WhatsApp
 - Instagram @vidracaria_e_serralharia
 - Sem e-mail
-- Endereço da oficina: Rua Presidente Epitácio Pessoa, 374, Boqueirão/PB, com mapa do Google Maps incorporado por iframe de incorporação (sem chave de API), carregado sob demanda e com link "Abrir no Google Maps" como alternativa.
+- Endereço da oficina: Rua Presidente Epitácio Pessoa, 374, Centro, Boqueirão/PB, CEP 58450-000, com mapa do Google Maps incorporado por iframe de incorporação (sem chave de API), carregado sob demanda e com link "Abrir no Google Maps" como alternativa.
 - Horário de atendimento: seg. a sex. 7h20–11h20 e 13h20–17h20; sáb. 7h–12h; domingo fechado. Mostrar "Aberto agora" ou "Fechado" com base nesse horário (fuso America/Fortaleza, que é o horário de Boqueirão/PB).
 - Botão flutuante do WhatsApp visível em todas as páginas, sem cobrir botões do formulário nem o botão de envio no celular.
 
@@ -168,7 +168,6 @@ Leia PRODUCT.md, AGENTS.md e docs/ e implemente o MVP descrito, nesta ordem: pro
 
 ## O que separar antes de rodar
 
-- Bairro e CEP da oficina.
 - Logo em boa resolução (de preferência SVG ou PNG com fundo transparente).
 - Fotos reais dos trabalhos para os cards do catálogo.
 - Link da pasta do Google Drive com as fotos de referência (compartilhada como "qualquer pessoa com o link pode ver").
