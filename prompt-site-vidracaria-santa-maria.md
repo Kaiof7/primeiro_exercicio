@@ -33,9 +33,9 @@ Dados da empresa para o empresa.json:
 - Segundo número (só na seção Fale Conosco, com link de ligação e de WhatsApp): 5583991153515, exibido como (83) 99115-3515
 - E-mail: não tem (deixar vazio e não exibir)
 - Instagram: @vidracaria_e_serralharia → https://www.instagram.com/vidracaria_e_serralharia/
-- Endereço: Rua Presidente Epitácio Pessoa, 374, Centro, Boqueirão/PB, CEP 58450-000. Coordenadas: -7.481445, -36.131624.
-- Mapa incorporado: https://www.google.com/maps?q=-7.481445,-36.131624&output=embed
-- Link "Abrir no Google Maps": https://www.google.com/maps/search/?api=1&query=-7.481445,-36.131624
+- Endereço: Rua Presidente Epitácio Pessoa, 374, Centro, Boqueirão/PB, CEP 58450-000. Coordenadas: -7.4814216, -36.1315391 (do perfil da empresa no Google, "Chaveiro, Vidraçaria e Serralharia Sta_Maria").
+- Mapa incorporado (mostra o pino do perfil da empresa): https://www.google.com/maps?q=Chaveiro,+Vidra%C3%A7aria+e+Serralharia+Sta_Maria,+Boqueir%C3%A3o+-+PB&ll=-7.4814216,-36.1315391&z=17&output=embed
+- Link "Abrir no Google Maps" (abre o perfil da empresa): https://www.google.com/maps/place/Chaveiro,+Vidra%C3%A7aria+e+Serralharia+Sta_Maria+-+R.+Epit%C3%A1cio+Pessoa,+340+-+Centro,+Boqueir%C3%A3o+-+PB,+58450-000/@-7.4814216,-36.1315391,17z/data=!4m6!3m5!1s0x7a94d439dad49e5:0x516a971ae4291d0!8m2!3d-7.4814216!4d-36.1315391!16s%2Fg%2F11txm6nnjp
 - Horário: segunda a sexta, 7h20 às 11h20 e 13h20 às 17h20; sábado, 7h às 12h; domingo fechado.
 - Avaliação no Google: https://g.page/r/CdCRQq5xqRYFEBM/review
 - Pasta do Google Drive: pendente (deixar vazio por enquanto)
