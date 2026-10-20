@@ -101,7 +101,7 @@ Exemplos que precisam bater (viram testes automatizados):
 ## 4. Formulário de orçamento
 - Nome (obrigatório)
 - WhatsApp (obrigatório, com máscara (00) 00000-0000, aceitando também fixo (00) 0000-0000)
-- Endereço: CEP com preenchimento automático pelo ViaCEP (https://viacep.com.br), rua, número, complemento, bairro e cidade. Se o ViaCEP falhar, demorar mais de alguns segundos ou não achar o CEP, avisar e deixar o cliente preencher à mão, sem travar o formulário. Bairro e cidade obrigatórios; o resto opcional.
+- Endereço: CEP com preenchimento automático pelo ViaCEP (https://viacep.com.br), rua, número, complemento, bairro e cidade. Se o ViaCEP falhar, demorar mais de alguns segundos ou não achar o CEP, avisar e deixar o cliente preencher à mão, sem travar o formulário. Boqueirão e outras cidades pequenas da região têm CEP único (ex.: 58450-000): nesse caso o ViaCEP devolve só cidade e UF, sem rua nem bairro, então preencher a cidade, deixar rua e bairro livres e levar o foco para a rua. Incluir esse caso nos testes. Bairro e cidade obrigatórios; o resto opcional.
 - Categoria e produto (listas que vêm do produtos.json; trocar a categoria filtra os produtos)
 - "Com instalação" (caixa de marcar, só para vidros e espelhos que têm esse preço)
 - Largura e altura em cm (obrigatórias), quantidade (padrão 1)
